@@ -73,6 +73,23 @@ data class ChordNode(
             includeFirst: Boolean = false,
             includeSecond: Boolean = false
     ): Boolean {
+        if (firstId < secondId) {
+            val first = if (includeFirst) firstId else firstId + 1
+            val second = if (includeSecond) secondId else secondId - 1
+            return this in first..second
+        } else {
+            val first = (if (includeFirst) firstId else firstId + 1) % Math.pow(2.0, m.toDouble()).toInt()
+            val second = ((if (includeSecond) secondId else secondId - 1) + Math.pow(2.0, m.toDouble()).toInt()) % Math.pow(2.0, m.toDouble()).toInt()
+            if (first == second) {
+                return true
+            } else if (first < second) {
+                return this in first..second
+            } else if (first > second) {
+                return this in first until Math.pow(2.0, m.toDouble()).toInt() || this in 0..second
+            }
+        }
+
+
         //todo Функция принадлежности айдишника на кольце
         return true
     }
