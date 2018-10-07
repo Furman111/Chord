@@ -3,7 +3,7 @@ data class ChordNode(
         val id: Int
 ) {
 
-    private val successor
+    val successor
         get() = fingers[0].node
 
     private var predecessor = this
@@ -22,12 +22,10 @@ data class ChordNode(
         return p
     }
 
-    private fun closestPrecedingFinger(id: Int): ChordNode {
-        return (fingers.size - 1 downTo 0)
-                .firstOrNull { fingers[it].node.id.belongs(this.id, id) }
-                ?.let { fingers[it].node }
-                ?: this
-    }
+    private fun closestPrecedingFinger(id: Int) = (fingers.size - 1 downTo 0)
+            .firstOrNull { fingers[it].node.id.belongs(this.id, id) }
+            ?.let { fingers[it].node }
+            ?: this
 
     fun join(n0: ChordNode?) {
         if (n0 != null) {
@@ -51,7 +49,7 @@ data class ChordNode(
 
     private fun updateOthers() {
         for (i in 0 until fingers.size) {
-            val index = ((id - Math.pow(2.0, (i - 1).toDouble()).toInt()) + Math.pow(2.0, m.toDouble()).toInt()) % Math.pow(2.0, m.toDouble()).toInt()
+            val index = ((id - Math.pow(2.0, i.toDouble()).toInt()) + Math.pow(2.0, m.toDouble()).toInt()) % Math.pow(2.0, m.toDouble()).toInt()
             findPredecessor(index).updateFingerTable(this, i)
         }
     }
@@ -90,7 +88,6 @@ data class ChordNode(
         }
 
 
-        //todo Функция принадлежности айдишника на кольце
         return true
     }
 
