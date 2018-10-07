@@ -16,7 +16,7 @@ data class Finger(
             )
         }
 
-        fun start(m: Int, id: Int, i: Int) = (id + Math.pow(2.0, i.toDouble()).toInt()) % Math.pow(2.0, m.toDouble()).toInt() 
+        fun start(m: Int, id: Int, i: Int) = (id + Math.pow(2.0, (i % m).toDouble()).toInt()) % Math.pow(2.0, m.toDouble()).toInt()
 
     }
 
